@@ -1,0 +1,30 @@
+mixin pagination(pages)
+  ul.gallery-pages.pagination
+    -if pages.has_prev
+      li
+        a(href="#{url_for('dashboard.gallery', page=pages.prev_num)}")
+          span.glyphicon.glyphicon-chevron-left
+    -else
+      li.disabled
+        span.glyphicon.glyphicon-chevron-left
+
+    -each num in pages.iter_pages()
+      -if num
+        -if num == pages.page
+          li.active
+            span= num
+        -else
+          li
+            a(href="#{url_for('dashboard.gallery', page=num)}")
+              span= num
+      -else
+        li
+          span &hellip;
+
+    -if pages.has_next
+      li
+        a(href="#{url_for('dashboard.gallery', page=pages.next_num)}")
+          span.glyphicon.glyphicon-chevron-right
+    -else
+      li.disabled
+        span.glyphicon.glyphicon-chevron-right

@@ -1,0 +1,283 @@
+extends layouts/base.jade
+{% from "macros/_form.html" import render_field %}
+
+block body
+  -if provider
+    .container.dashboard
+      .row.dash-group
+        .col-md-12 
+          .btn-group.btn-group-lg
+            a.btn.btn-primary(type="button", href="#{url_for('frontend.provider_url', provider_url=provider.business_url)}") View Profile
+            a.btn.btn-concerned(type="button", href="#{url_for('security.change_password')}") Change Password
+
+      .row.dash-group
+        .col-sm-3
+          .dash-imgs
+            -if provider.avatar
+              img.img-responsive(src="#{provider.avatar.lg_thumb}")
+            -else
+              img.img-responsive(src="http://placehold.it/450x450&text=Avatar")
+
+          form.upload-avatar(action="", method="post", enctype="multipart/form-data")
+            input(type="hidden", value="#{csrf_token()}")
+            .form-group
+              = avatar_upload_form.up_file.label()
+              = avatar_upload_form.up_file(class_="form-control")
+
+            .form-group
+              = avatar_upload_form.submit(class_="btn btn-cta")
+
+        .col-sm-9
+          .dash-imgs
+            -if provider.banner
+              img.img-responsive(src="#{provider.banner.url}")
+            -else
+              img.img-responsive(src="http://placehold.it/800x300")
+
+
+          form(action="", method="post", enctype="multipart/form-data")
+            input(type="hidden", value="#{csrf_token()}")
+            .form-group.row
+              .col-sm-6
+                = banner_upload_form.up_file.label(class_="control-label")
+                = banner_upload_form.up_file(class_="form-control")
+
+            .form-group.row
+              .col-sm-6
+                = banner_upload_form.submit(class_="btn btn-cta")
+              
+      .row.dash-group
+        .col-sm-6
+          h2 General Info
+
+          form(action="#{url_for('dashboard.profile')}", method="post")
+            input(type="hidden", value="#{csrf_token()}")
+
+            .form-group
+              = provider_dash_form.business_name.label(class_="control-label")
+              = provider_dash_form.business_name(class_="form-control")
+
+            .form-group
+              = provider_dash_form.external_site.label(class_="control-label")
+              = provider_dash_form.external_site(class_="form-control")
+
+            .form-group
+              = provider_dash_form.phone.label(class_="control-label")
+              = provider_dash_form.phone(class_="form-control")
+
+            .form-group
+              = provider_dash_form.email.label(class_="control-label")
+              = provider_dash_form.email(class_="form-control")
+
+            .form-group
+              = provider_dash_form.bio.label(class_="control-label")
+              = provider_dash_form.bio(class_="form-control")
+
+            .form-group.payment-methods
+              = provider_dash_form.payment_methods.label(class_="control-label")
+              = provider_dash_form.payment_methods()
+
+            .form-group
+              = provider_dash_form.submit(class_="btn btn-cta")
+
+        .col-sm-6
+          h2 Address
+
+          form(action="#{}", method="post")
+            input(type="hidden", value="#{csrf_token()}")
+
+            .form-group
+              = address_form.street_1.label(class_="control-label")
+              = address_form.street_1(class_="form-control")
+
+            .form-group
+              = address_form.street_2.label(class_="control-label")
+              = address_form.street_2(class_="form-control")
+
+            .form-group
+              = address_form.city.label(class_="control-label")
+              = address_form.city(class_="form-control")
+
+            .form-group
+              = address_form.state.label(class_="control-label")
+              = address_form.state(class_="form-control")
+
+            .form-group
+              = address_form.zip_code.label(class_="control-label")
+              = address_form.zip_code(class_="form-control")
+
+            .form-group
+              = address_form.submit(class_="btn btn-cta")
+
+      .row.dash-group
+        .col-sm-5
+          h2 Hours
+
+          form(action="#{}", method="post")
+            input(type="hidden", value="#{csrf_token()}")
+
+            table.table
+              thead
+                tr
+                  th
+                  th Open
+                  th Closed
+
+              tbody
+                tr
+                  td 
+                    h5 Monday
+                  td
+                    = hours_form.monday_open(class_="form-control")
+                  td
+                    = hours_form.monday_close(class_="form-control")
+
+                tr
+                  td
+                    h5 Tuesday
+                  td
+                    = hours_form.tuesday_open(class_="form-control")
+                  td
+                    = hours_form.tuesday_close(class_="form-control")
+
+                tr
+                  td
+                    h5 Wednesday
+                  td
+                    = hours_form.wednesday_open(class_="form-control")
+                  td
+                    = hours_form.wednesday_close(class_="form-control")
+
+                tr
+                  td
+                    h5 Thursday
+                  td
+                    = hours_form.thursday_open(class_="form-control")
+                  td
+                    = hours_form.thursday_close(class_="form-control")
+
+                tr
+                  td
+                    h5 Friday
+                  td
+                    = hours_form.friday_open(class_="form-control")
+                  td
+                    = hours_form.friday_close(class_="form-control")
+
+                tr
+                  td
+                    h5 Saturday
+                  td
+                    = hours_form.saturday_open(class_="form-control")
+                  td
+                    = hours_form.saturday_close(class_="form-control")
+
+                tr
+                  td
+                    h5 Sunday
+                  td
+                    = hours_form.sunday_open(class_="form-control")
+                  td
+                    = hours_form.sunday_close(class_="form-control")
+
+            .form-group
+              = hours_form.submit(class_="btn btn-cta")
+
+        .col-sm-7
+          h2 Your Menus
+
+          h4 Add A Menu Item
+          form(action="", method="post")
+            input(type="hidden", value="#{csrf_token()}")
+
+            .form-group
+              = menu_form.menu_type.label(class_="control-label")
+              = menu_form.menu_type(class_="form-control")
+
+            .form-group
+              = menu_form.name.label(class_="control-label")
+              = menu_form.name(class_="form-control")
+
+            .form-group
+              = menu_form.price.label(class_="control-label")
+              = menu_form.price(class_="form-control")
+
+            .form-group
+              = menu_form.description.label(class_="control-label")
+              = menu_form.description(class_="form-control")
+
+            .form-group
+              = menu_form.submit(class_="btn btn-cta")
+
+          table.table
+            -each menu in provider.menus 
+              thead
+                tr
+                  th= menu.menu_type | upper
+              tbody
+                -each item in menu.items
+                  tr
+                    td= item.name
+                    td= item.price | cash
+                    td= item.description
+      
+      .row.dash-group
+        .col-sm-12
+          h2 Shared With You
+          -if provider.shared | count == 0
+            h4 None of your customers have shared their info with you yet.
+          -else
+            -each share in provider.shared
+              .row
+                .col-sm-12
+                  a(href="#{url_for('frontend.consumer_url', consumer_url=share.consumer_url)}")= shared.user.first_name
+
+      .row.dash-group
+        .col-sm-12
+          h2 Customer Comments
+          -if provider.comments | count == 0
+            h4. 
+              Nobody's left a comment on your business yet. Let you customers
+              know that they can sing your praises!
+          -else
+            -each comment in provider.comments
+              .row
+                .col-sm-12
+                  .comment.media
+                    img.media-object.pull-left(src="http://placehold.it/65x65")
+                    .media-body
+                      h5.customer-name.media-heading= comment.consumer.user.first_name
+                      p.body= comment.body
+      
+      .row.dash-group
+        .col-sm-12
+          h2 Your Gallery
+            span.label.label-cta.label-gallery
+              a(href="#{url_for('dashboard.gallery', page='1')}") See the rest
+
+          .row
+            .col-sm-4
+              form(enctype="multipart/form-data", action="", method="")
+                input(type="hidden", value="#{csrf_token()}")
+
+                .form-group
+                  = gallery_upload_form.up_file.label(class_="control-label")
+                  = gallery_upload_form.up_file(class_="form-control")
+
+                .form-group
+                  = gallery_upload_form.submit(class_="btn btn-cta")
+
+          .row
+            -if provider.gallery.photos.count() == 0
+              .col-sm-12
+                h4 You haven't uploaded any photos of your work.  You should! Show the world how good you are.
+
+            -else
+              -each photo in provider.gallery.photos[0:8]
+                .col-sm-3
+                  .thumb-container.small.overlay
+                    .thumb-controls
+                      a.del-button(href="#{url_for('dashboard.delete_photo', id=photo.id)}") Delete
+
+                    a(href="#{photo.url}")
+                      img.img-responsive(src="#{photo.sm_thumb}")

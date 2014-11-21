@@ -1,0 +1,35 @@
+// 36
+// 30
+// 24
+// 18
+// 12
+@font-face {
+    src: url('/static/font/gafata.ttf');
+    font-family: 'New Cicle Gordita';
+}
+
+@font-face {
+    src: url('/static/font/geo_sans.ttf');
+    font-family: 'Geo Sans';
+}
+
+.gafata { font-family: 'Gafata', sans-serif; }
+.geo-sans { font-family: 'Geo Sans', sans-serif; }
+
+a { color: @link-color; text-decoration: none !important; }
+a:hover, a:active { color: @link-hover; }
+
+p { font-size: 18px; }
+p,span,h1,h2,h3,h4,h5,h6 { color: @font-color; }
+
+h1 { font-size: 42px; }
+h2 { font-size: 36px; }
+h3 { font-size: 30px; }
+h4 { font-size: 24px; }
+h5 { font-size: 18px; }
+h6 { font-size: 12px; }
+h1,h2,h3,h4,h5,h6, a.btn, input.btn { .geo-sans; }
+p, span, table, li, label, input, select, a { .gafata; }
+
+.sub { color: @sub-font-color; }
+label { color: @label-font-color; }

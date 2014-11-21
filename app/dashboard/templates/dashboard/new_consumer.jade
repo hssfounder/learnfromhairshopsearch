@@ -1,0 +1,12 @@
+{% from "macros/_form.html" import render_form %}
+extends layouts/base.jade
+block body
+  .walkthrough.container
+    .row
+      .col-sm-4
+        h1 Ok, first, what's your name?
+        p We use it to build your personal url.
+
+      .col-sm-8
+        {{ render_form(form, url_for('dashboard.new_consumer')) }}
+

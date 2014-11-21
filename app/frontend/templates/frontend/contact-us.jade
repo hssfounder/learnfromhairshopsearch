@@ -1,0 +1,31 @@
+extends layouts/base.jade
+block body
+  .container
+    .row
+      .col-sm-12
+        h1 Talk to Us!
+
+    .row
+      .col-sm-6
+        form(action="#{url_for('frontend.contact_us')}", method="post")
+          input(type="hidden", name="csrf_token", value="#{csrf_token()}")
+          input(type="text", name="honeypot", style="visibility: hidden; display: none")
+
+          .form-group.row
+            .col-sm-6
+              label.control-label(for="name") Your Name
+              input.form-control(type="text", name="name")
+            .col-sm-6
+              label.control-label(for="number") Your Number
+              input.form-control(type="text", name="number")
+
+          .form-group.row
+            .col-sm-12
+              label.control-label(for="message") What's Up?
+              textarea.form-control(name="message", rows=4)
+
+          .form-group.row
+            .col-sm-4
+              input.btn.btn-cta(type="submit") Say Hi
+        
+      .col-sm-6

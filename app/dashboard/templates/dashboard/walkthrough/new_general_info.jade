@@ -1,0 +1,47 @@
+extends layouts/base.jade
+block body
+  .walkthrough.container
+    .row
+      .col-sm-6
+        .row
+          .col-sm-12
+            h1 The rest is optional,
+            h2 but important for your customers.
+        .row
+          .col-sm-12
+            p.
+              There are a few more things you should fill in, but all of
+              the absolutely necessary stuff is out of the way.
+            p.
+              For instance, how can your customers contact your business?
+
+            p.
+              And what forms of payment to you accept?
+
+      .col-sm-6
+
+        form(class="form-horizontal", action="#{url_for('dashboard.new_general_info')}", method="post")
+          != form.csrf_token()
+          .form-group
+            .col-sm-3
+              != form.phone.label(class_="control-label")
+            .col-sm-9
+              != form.phone(class_="form-control")
+
+          .form-group
+            .col-sm-3
+              != form.email.label(class_="control-label")
+            .col-sm-9
+              != form.email(class_="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.payment_methods.label(class_="control-label")
+            .col-sm-8
+              != form.payment_methods(class_="form-control")
+
+          .form-group
+            .col-sm-3
+              != form.submit(class_="btn btn-success")
+            .col-sm-3
+              a.btn.btn-danger(href="#{url_for('dashboard.profile')}") Skip to My Profile

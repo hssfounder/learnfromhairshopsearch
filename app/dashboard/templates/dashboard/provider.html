@@ -1,0 +1,257 @@
+{% extends "layouts/base.jade" %}
+
+{% from "macros/_form.html" import render_field %}
+
+{% block body %}
+{% if provider %}
+<div class="container dashboard">
+    <div class="row dashboard-buttons">
+        {{ provider.external_site }}
+        <div class="col-md-2">
+            <a class="btn btn-cta dashboard" href="{{ url_for('frontend.provider_url',
+                provider_url=provider.business_url) }}">
+                View Profile
+            </a> </div>
+
+        <div class="col-md-2">
+            <a class="btn btn-concerned dashboard" href="{{ url_for('security.change_password') }}">
+                Change Password
+            </a>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="dash-group">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="thumb-container large">
+                    {% if provider.avatar.sm_thumb %}
+                    <img src="{{ provider.avatar.sm_thumb }}">
+                    {% else %}
+                    <img src="http://placehold.it/200x225">
+                    {% endif %}
+                </div>
+
+                <form method="POST" action="{{ url_for('dashboard.save_avatar') }}" class="form-horizontal" enctype="multipart/form-data">
+                    {{ avatar_upload_form.csrf_token() }}
+                    {{ render_field(avatar_upload_form.up_file) }}
+                    <div class="form-group">
+                        <div class="col-sm-2 col-sm-offset-4">
+                            {{ avatar_upload_form.submit(class_="btn btn-cta") }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-9">
+                <div class="thumb container large">
+                    {% if provider.banner %}
+                        <img src="{{ provider.banner.url }}">
+                     {% else %}
+                        <img src="http://placehold.it/800x300">
+                    {% endif %}
+                </div>
+
+                <form class="form-horizontal" action="{{ url_for('dashboard.save_banner') }}" method="post" role="form" enctype="multipart/form-data">
+                    {{ banner_upload_form.csrf_token() }}
+                    <div class="form-group">
+                        <label for="" class="control-label col-sm-4">Upload your banner image</label>
+                        <div class="col-sm-8">
+                            {{ banner_upload_form.up_file(class_="form-control") }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            {{ banner_upload_form.submit(class_="btn btn-cta") }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.dash-group -->
+
+    {% if provider_dash_form %}
+    <form class="form-horizontal dash-group" action="{{ url_for('dashboard.profile') }}" method="POST">
+        {{ provider_dash_form.csrf_token() }}
+        <h2> General Information </h2>
+
+
+        {{ render_field(provider_dash_form.business_name) }}
+        {{ render_field(provider_dash_form.external_site) }}
+        {{ render_field(provider_dash_form.phone) }}
+        {{ render_field(provider_dash_form.email) }}
+        {{ render_field(provider_dash_form.bio) }}
+
+        <div class="payment-methods">
+            <h2> Payment Methods </h2>
+            {{ render_field(provider_dash_form.payment_methods) }}
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-4">
+                {{ provider_dash_form.submit(class_='btn btn-cta') }}
+            </div>
+        </div>
+    </form>
+
+    <form class="form-horizontal dash-group" action="{{ url_for('dashboard.save_provider_address') }}" method="POST">
+        <h2> Address </h2>
+        {{ address_form.csrf_token() }}
+        {{ render_field(address_form.street_1) }}
+        {{ render_field(address_form.street_2) }}
+        {{ render_field(address_form.city) }}
+        {{ render_field(address_form.state) }}
+        {{ render_field(address_form.zip_code) }}
+
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-4">
+                {{ address_form.submit(class_='btn btn-cta') }}
+            </div>
+        </div>
+
+    </form>
+
+    <form class="form-horizontal dash-group" action="{{ url_for('dashboard.save_provider_hours') }}" method="POST">
+        <h2> Hours </h2>
+        {{ hours_form.csrf_token() }}
+        {{ render_field(hours_form.monday_open) }}
+        {{ render_field(hours_form.monday_close) }}
+        {{ render_field(hours_form.tuesday_open) }}
+        {{ render_field(hours_form.tuesday_close) }}
+        {{ render_field(hours_form.wednesday_open) }}
+        {{ render_field(hours_form.wednesday_close) }}
+        {{ render_field(hours_form.thursday_open) }}
+        {{ render_field(hours_form.thursday_close) }}
+        {{ render_field(hours_form.friday_open) }}
+        {{ render_field(hours_form.friday_close) }}
+        {{ render_field(hours_form.saturday_open) }}
+        {{ render_field(hours_form.saturday_close) }}
+        {{ render_field(hours_form.sunday_open) }}
+        {{ render_field(hours_form.sunday_close) }}
+
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-4">
+                {{ hours_form.submit(class_='btn btn-cta') }}
+            </div>
+        </div>
+    </form>
+    {% endif %}
+
+    <div class="dash-group">
+        <div class="row">
+            <div class="col-sm-7">
+                <h2> Your Menus </h2>
+                {% for menu in provider.menus %}
+                <table class="table">
+                    <thead>
+                        <tr><th>{{ menu.menu_type | upper }}</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for item in menu.menu_items %}
+                        <tr><td> {{ item.name }} </td>
+                            <td> {{ item.price | cash }} </td>
+                            <td> {{ item.description }} </td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-5">
+                {% if menu_form %}
+                <h2> Add Menu Item </h2>
+                <form class="form-horizontal" action="{{ url_for('dashboard.save_menu_item') }}" method="post">
+                    {{ menu_form.csrf_token() }}
+                    {{ render_field(menu_form.menu_type) }}
+                    {{ render_field(menu_form.name) }}
+                    {{ render_field(menu_form.price) }}
+                    {{ render_field(menu_form.description) }}
+
+                    <div class="row">
+                        <div class="col-sm-2 col-sm-offset-4">
+                            {{ menu_form.submit(class_='btn btn-cta') }}
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.dash-group -->
+
+    <div class="dash-group">
+        <div class="favorites">
+            <div class="container">
+                <div class="row">
+                    <h2> Shared With You </h2>
+                    {% if provider.shared | count == 0 %}
+                        <div class="col-sm-12">
+                            <h4> None of your customers have shared with you yet.  Tell them they should! </h4>
+                        </div>
+                    {% else %}
+                        {% for share in provider.shared %}
+                        <div class="col-sm-3">
+                            <a href="{{ url_for('frontend.consumer_url', consumer_url=share.consumer_url) }}">
+                                <div class="shared-consumer-wrap">
+                                    <div class="thumb-container small">
+                                        <img src="{{ share.avatar.sm_thumb }}">
+                                    </div>
+
+                                    <p class="caption">{{ share.user.first_name }} {{ share.user.last_name }}</p>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-group">
+        <form id="upload-avatar" class="form-horizontal" enctype="multipart/form-data" action="{{ url_for('dashboard.save_photo') }}" method="post">
+            {{ gallery_upload_form.csrf_token() }}
+
+            <div class="form-group">
+                <label for="file_data" class="control-label col-sm-2">Upload An Image</label>
+                <div class="col-sm-10">
+                    <input type="file" name="up_file" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                    <input type="submit" class="btn btn-cta" value="Save Photo">
+                </div>
+            </div>
+        </form>
+
+        <div class="gallery">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2> Gallery </h2>
+                    <a href="{{ url_for('dashboard.gallery', page='1') }}">See the rest</a>
+                </div>
+            </div><!-- /.row-->
+
+            <div class="row">
+                {% for photo in provider.gallery.photos[0:8] %}
+                <div class="col-sm-3">
+                    <div class="thumb-container small overlay">
+                        <div class="thumb-controls">
+                            <a class="del-button" href="{{ url_for('dashboard.delete_photo', id=photo.id) }}">Delete</a>
+                        </div>
+
+                        <a href="{{ photo.url }}">
+                            <img class="gallery-img img-responsive" src="{{ photo.lg_thumb }}" alt=""></img> 
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div><!-- /.row -->
+
+        </div><!-- /.gallery -->
+    </div><!-- /.dash-group -->
+
+</div><!-- /.container -->
+{% endif %}
+{% endblock %}

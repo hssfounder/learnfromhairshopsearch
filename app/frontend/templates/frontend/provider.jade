@@ -1,0 +1,289 @@
+extends layouts/base.jade
+block body
+  .provider.dashboard.container
+    .row
+      .col-sm-12
+        .banner
+          -if provider.banner
+            img.img-responsive(src="#{provider.banner.url}")
+          -else
+            img.img-responsive(src="http://placehold.it/1200x350&text=Banner")
+
+          -if provider.avatar
+            .thumb-container.large.portrait
+              img.img-responsive(src="#{provider.avatar.sm_thumb}")
+          -else
+            img.img-responsive.portrait(src="http://placehold.it/165x165")
+
+    .row
+      .col-sm-6
+        h1= provider.business_name
+
+        h4 #{provider.favorited_by.all() | count} consider us a favorite
+        p.phone= provider.phone
+
+        -if provider.external_site
+          a(target="_blank", href="#{provider.external_site | url }") Our Website
+        -else
+          a Our Website
+
+        -if current_user.consumer
+          .row 
+            .col-sm-12
+              a.btn.btn-cta(href="#{ url_for('frontend.favorite', provider_id=provider.id) }")
+                span.glyphicon.glyphicon-star-empty  Favorite Us!
+
+
+
+      .col-sm-6
+        table.table
+          thead
+            tr
+              th Hours
+              th Open
+              th Close
+
+          tbody
+          -if d.getDay() == 0
+            tr
+              td Sun
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+            tr
+              td Mon
+              td= provider.hours.monday_open
+              td= provider.hours.monday_close
+
+          -if d.getDay() == 1
+            tr
+              td Mon
+              td= provider.hours.monday_open
+              td= provider.hours.monday_close
+
+            tr
+              td Tue
+              td= provider.hours.tuesday_open
+              td= provider.hours.tuesday_close
+
+          -if d.getDay() == 2
+            tr
+              td Tue
+              td= provider.hours.tuesday_open
+              td= provider.hours.tuesday_close
+
+            tr
+              td Wed
+              td= provider.hours.wednesday_open
+              td= provider.hours.wednesday_close
+
+          -if d.getDay() == 3
+            tr
+              td Wed
+              td= provider.hours.wednesday_open
+              td= provider.hours.wednesday_close
+
+            tr
+              td Thu
+              td= provider.hours.thursday_open
+              td= provider.hours.thursday_close
+
+          -if d.getDay() == 4
+            tr
+              td Thu
+              td= provider.hours.thursday_open
+              td= provider.hours.thursday_close
+
+            tr
+              td Fri
+              td= provider.hours.friday_open
+              td= provider.hours.friday_close
+
+          -if d.getDay() == 5
+            tr
+              td Fri
+              td= provider.hours.friday_open
+              td= provider.hours.friday_close
+
+            tr
+              td Sat
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+          -if d.getDay() == 6
+            tr
+              td Sat
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+            tr
+              td Sun
+              td= provider.hours.sunday_open
+              td= provider.hours.sunday_close
+
+        a(data-toggle="modal", data-target="#hours-modal") View More Hours
+
+        address
+          p #{provider.address.street_1} #{provider.address.street_2}
+          p #{provider.address.city}, #{provider.address.state} #{provider.address.zip_code}
+
+
+    .row.bio
+      .col-sm-8
+        h4 About Us
+        p= provider.bio
+
+    .row.paper-bg
+      .col-sm-3
+        h4 We Accept:
+      .col-sm-9
+        ul.payment-methods
+          -if provider.payment_methods == ''
+            li
+              p Nothing?
+              p.
+                This provider probably wants to take your money, but they need to list a payment
+                method to do it!
+          -else
+            -each method in provider.payment_methods.split(' ')
+              li
+                img(src="/static/img/icons/#{method}.png", title="#{method}")
+                p= method | capitalize
+
+    .row
+      .col-sm-7
+        .row
+          .col-sm-12
+            h2 Our Work
+            -unless provider.gallery.photos.all() | count > 0
+              h4 We will be uploading photos soon.
+            .row.gallery.links
+              -each pic in provider.gallery.photos[0:12]
+                .col-sm-3
+                  .thumb-container.small
+                    a(href="#{pic.url}", data-gallery)
+                      img.img-responsive(src="#{pic.sm_thumb}")
+        .row
+          .col-sm-12
+
+            -unless current_user.consumer
+              h3 Login to leave a comment!
+            -if current_user.consumer
+              .row
+                .col-sm-12
+                  h3 Leave a comment!
+                  form(action="#{url_for('frontend.comment', provider_id=provider.id)}", method="post")
+                    input(type="hidden", name="csrf_token",  value="#{csrf_token()}")
+
+                    .form-group
+                      h4 And be sure to tell us if you were happy with your service.
+                      .btn-group(data-toggle="buttons")
+                        label.btn.btn-default
+                          input(type="radio", name="happy", value="true")
+                          | Happy
+
+                        label.btn.btn-default
+                          input(type="radio", name="happy", value="false")
+                          | Unhappy
+
+                    .form-group
+                        label.control-label(for="body") Your Comment
+                        textarea.form-control(name="body", rows=4)
+
+                    .form-group
+                        button.btn.btn-cta(type="submit") Let Us Know!
+
+            h2 Customer Comments
+            .row
+              .col-sm-12
+                -each comment in provider.comments
+                  .media.comment
+                    -if comment.consumer.avatar
+                      img.media-object.pull-left.img-responsive(src="#{comment.consumer.avatar.sm_thumb}")
+                    -else
+                      img.media-object.pull-left.img-responsive(src="http://placehold.it/125x125")
+
+                    -if comment.happy
+                      img.media-object.pull-right(src="http://placehold.it/50x50&text=Happy")
+                    -else
+                      img.media-object.pull-right(src="http://placehold.it/50x50&text=Unhappy")
+
+                      .media-body
+                        h4.media-header= comment.consumer.user.first_name
+                        p= comment.body
+
+
+      .col-sm-5
+        h2 Menus
+        -each menu in provider.menus
+          .row
+            .col-sm-12
+              h3= menu.menu_type
+              table.table.salon-menu
+                thead
+                  tr
+                    th Name
+                    th Desc
+                    th Price
+
+                tbody
+                -each item in menu.menu_items
+                  tr
+                    td Hair Cut
+                    td We cut your hair with scissors
+                    td 15.00
+
+
+  #hours-modal.modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h1 The Hours
+        .modal-body
+          table.table.hours
+            thead
+              tr
+                th Day
+                th Open
+                th Close
+
+            tbody
+              tr
+                td Monday
+                td= provider.hours.monday_open
+                td= provider.hours.monday_close
+
+              tr
+                td Tuesday
+                td= provider.hours.tuesday_open
+                td= provider.hours.tuesday_close
+
+              tr
+                td Wednesday
+                td= provider.hours.wednesday_open
+                td= provider.hours.wednesday_close
+
+              tr
+                td Thursday
+                td= provider.hours.thursday_open
+                td= provider.hours.thursday_close
+
+              tr
+                td Friday
+                td= provider.hours.friday_open
+                td= provider.hours.friday_close
+
+              tr
+                td Saturday
+                td= provider.hours.saturday_open
+                td= provider.hours.saturday_close
+
+              tr
+                td Sunday
+                td= provider.hours.sunday_open
+                td= provider.hours.sunday_close
+
+        .modal-footer
+
+  include includes/blueimp-gallery.jade
+

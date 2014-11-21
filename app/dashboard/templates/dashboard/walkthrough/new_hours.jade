@@ -1,0 +1,108 @@
+extends layouts/base.jade
+block body
+  .walkthrough.container
+    .row
+      .col-sm-6
+        .row
+          .col-sm-12
+            h1 What are your hours of business?
+        .row
+          .col-sm-12
+            p.
+              At this point, we have all of the info that we need for the
+              website to work, but it would be helpful to your customers
+              for you to fill out a  little more info about your business.
+
+      .col-sm-6
+        form(class="form-horizontal", action="#{url_for('dashboard.new_hours')}", method="post")
+          != form.csrf_token()
+          .form-group
+            .col-sm-4
+              != form.monday_open.label(class="control-label")
+            .col-sm-8
+              != form.monday_open(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.monday_close.label(class="control-label")
+            .col-sm-8
+              != form.monday_close(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.tuesday_open.label(class="control-label")
+            .col-sm-8
+              != form.tuesday_open(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.tuesday_close.label(class="control-label")
+            .col-sm-8
+              != form.tuesday_close(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.wednesday_open.label(class="control-label")
+            .col-sm-8
+              != form.wednesday_open(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.wednesday_close.label(class="control-label")
+            .col-sm-8
+              != form.wednesday_close(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.thursday_open.label(class="control-label")
+            .col-sm-8
+              != form.thursday_open(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.thursday_close.label(class="control-label")
+            .col-sm-8
+              != form.thursday_close(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.friday_open.label(class="control-label")
+            .col-sm-8
+              != form.friday_open(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.friday_close.label(class="control-label")
+            .col-sm-8
+              != form.friday_close(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.saturday_open.label(class="control-label")
+            .col-sm-8
+              != form.saturday_open(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.saturday_close.label(class="control-label")
+            .col-sm-8
+              != form.saturday_close(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.sunday_open.label(class="control-label")
+            .col-sm-8
+              != form.sunday_open(class="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.sunday_close.label(class="control-label")
+            .col-sm-8
+              != form.sunday_close(class="form-control")
+
+          .form-group
+            .col-sm-3
+              != form.submit(class_="btn btn-success")
+            .col-sm-3
+              a.btn.btn-danger(href="#{url_for('dashboard.profile')}").
+                Skip to My Profile

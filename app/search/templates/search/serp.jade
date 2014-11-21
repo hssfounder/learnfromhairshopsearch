@@ -1,0 +1,59 @@
+extends layouts/base.jade
+block body
+  .serp-offset
+    .container
+      .row
+        .col-sm-10.col-sm-offset-1.serp-wrapper
+          .row
+            .col-sm-7
+              h1 Search Results
+              .serp-res-left
+                .row.serp-goog
+                  .col-md-12
+
+              -if pagination_links
+                .pagination
+                  ul
+                    -each link in pagination_links
+                      li
+                        a(href="#{ link['url'] }")= link['page_number']
+
+              -if providers
+                -each provider in providers
+                  .row.serp-box
+                    .col-xs-3
+                      img.img-responsive.serp-img(src="http://placehold.it/65x65")
+
+                    .col-xs-9
+                      .serp-format
+                        h2
+                          a(href="/#{provider.business_url}")
+                            p #{provider.address.street_1}#{ provider.address.city}, #{provider.address.state} #{provider.address.zip_code}
+                        p Today's hours: #{provider.hours.todays_hours()[0]}
+
+                        .favs
+                          span.glyphicon.glyphicon-star
+                            -if provider.favorited_by
+                              span= provider.favorited_by.all() | count
+                            -else
+                              span 0
+
+            .col-sm-5
+              .serp-promo-right
+                .row
+                  .col-sm-12
+                    .serp-advert
+                      p Local Advert
+                      img.img-responsive.center-block(src="http://placehold.it/400x200")
+
+                .row
+                  .col-sm-12
+                    .serp-advert
+                      p Local Advert
+                      img.img-responsive.center-block(src="http://placehold.it/400x200")
+
+                .row
+                  .col-sm-12
+                    .serp-advert
+                      p Local Advert
+                      img.img-responsive.center-block(src="http://placehold.it/400x200")

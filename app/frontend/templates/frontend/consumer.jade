@@ -1,0 +1,40 @@
+extends layouts/base.jade
+block body
+  .consumer.profile.container
+    .row
+      .col-sm-5.col-sm-push-7
+         .thumb-container.large
+           -if consumer.avatar
+             img(src="#{consumer.avatar.lg_thumb}")
+           -else
+             img(src="http://placehold.it/300x300")
+
+         h1 #{consumer.user.first_name} #{consumer.user.last_name}
+
+      .col-sm-7.col-sm-pull-5
+        .row
+          .col-sm-12.well
+            p Tell the world about the status of your hair...
+            -if consumer.hair_status == ''
+              h2 Is lovely.
+            -else
+              h2= consumer.hair_status
+
+        .row
+          .col-sm-12
+            h3 This is my hair story:
+            -if consumer.hair_journey == ''
+              p My story is still in the works!
+            -else
+              p= consumer.hair_journey
+
+        .row
+          .col-sm-12
+            h3 My Favorite HairShops:
+            -each fav in consumer.favorites
+              .row
+                .col-sm-12
+                  .fav-hairshop.media
+                    img.media-object.pull-left(src="http://placehold.it/65x65")
+                    .media-body
+                      h4.media-header= fav.business_name 

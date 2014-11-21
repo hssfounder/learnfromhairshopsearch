@@ -1,0 +1,140 @@
+doctype html
+// if lt IE 7
+  <html class="no-js lt-ie9 le-ie8 lt-ie7" lang="en">
+// if IE 7
+  <html  class="no-js lt-ie9 lt-ie8" lang="en">
+// if IE 8
+  <html class="no-js lt-ie9" lang="en">
+// [if gt IE 8]><!
+html.no-js 
+  // <![endif]
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatbile", content="ID=edge,chrome=1")
+
+    block title
+      title HairShopSearch
+
+    meta(name="descripttion",
+      content="HairShopSearch is a directory of products and services for black hair care in your area!")
+    meta(name="viewport", content="initial-scale=1.0")
+    meta(name="csrf", content="#{ csrf_token() }")
+
+    link(rel="shortcut icon", href="#{ url_for('static', filename='favicon.ico') }")
+    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
+    link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Gafata")
+    link(rel="stylesheet", href="#{ url_for('static', filename='css/vendor/blueimp-gallery.min.css') }")
+    link(rel="stylesheet", href="#{ url_for('static', filename='css/vendor/bootstrap-image-gallery.min.css') }")
+
+    = css('css')
+
+    script(src="#{ url_for('static', filename='js/vendor/respond.min.js') }")
+    script(src="#{ url_for('static', filename='js/vendor/modernizr-2.6.2.min.js') }")
+
+  -if request.path == url_for('frontend.index')
+    bodyClass = 'index'
+  -else
+    bodyClass = ''
+  body(class=bodyClass)
+    // if lt IE 7
+      p.chromeframe.
+        You are using an <strong>outdated</strong> browser. Please <a
+        href="http://browsehappy.com/">upgrade your browser</a> or <a
+        href="http://www.google.com/chromeframe/?redirect=true">activate
+        Google Chrome Frame</a> to improve your experience.
+    
+    block nav
+      nav.navbar.navbar-primary.navbar-fixed-top
+        .nav-container
+          .navbar-header
+            button.navbar-toggle(type="button", data-toggle="collapse", data-target="#primary-collapse")
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            
+            a.navbar-brand.navbar-left(href="#{ url_for('frontend.index') }")
+              img.index.img-responsive(src="#{ url_for('static', filename='img/logo-small.png') }")
+
+          #primary-collapse.collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-right
+              -if current_user.is_authenticated()
+                li
+                  a(href="#{ url_for('dashboard.profile') }") My Account
+                li
+                  a(href="#{ url_for('security.logout') }") Logout
+
+              -else
+                li
+                  a(href="#{ url_for('frontend.provider_welcome') }") For Providers
+                li
+                  a(href="#{ url_for('frontend.consumer_welcome') }") For Consumers
+                li
+                  a(href="#{ url_for('security.login') }") Login
+
+      -if request.path != url_for('frontend.index')
+        nav.navbar.navbar-fixed-top.secondary
+          .navbar-container
+            .navbar-header
+              button.navbar-toggle(type="button", data-toggle="collapse", data-target="#secondary-collapse")
+                span.sr-only Toggle Search Bar
+                span.glyphicon.glyphicon-search
+
+            #secondary-collapse.collapse.navbar-collapse
+              form.navbar-form(action="#{ url_for('search._search') }", method="get", role="form")
+                input(type="hidden", value="#{ csrf_token() }")
+                .form-group
+                  label.sr-only(for="menu_type") Service Type
+                  select#menu_type.form-control(name="menu_type")
+                    option(value="none") I'm looking for:
+                    option(value="salon") Salons
+                    option(value="barbershop") Barbershops
+                    option(value="product") Products
+
+                .form-group
+                  label.sr-only(for="zip_code") Zip
+                  input#zip_code.form-control(type="text", name="zip_code", placeholder="near this ZIP code (Ex. 75243)")
+
+                .form-group
+                  button#submit.btn.btn-default(type="submit") Search
+
+      .page-wrap
+        include security/_messages.html
+        block body
+
+      .footer
+        .container
+          .row
+            .col-sm-12
+              p
+                a(href="#{ url_for('frontend.index') }") Home 
+                | &#124;
+                a(href="#{ url_for('frontend.provider_welcome') }") For Providers 
+                | &#124;
+                a(href="#{ url_for('frontend.consumer_welcome') }") For Consumers 
+                | &#124;
+                a(href="#{ url_for('frontend.about_us') }") About Us 
+                | &#124; 
+                a(href="#{ url_for('frontend.contact_us') }") Contact Us
+
+              p Provided by HairShopSearch&trade;, all rights reserved &copy;2014
+              
+              p
+                a(href="#{ url_for('frontend.tos') }") Terms of Service
+                a(href="#{ url_for('frontend.privacy_policy') }") Privacy Policy
+      
+      script(src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+      script.
+        window.jQuery || document.write('<script src="/static/js/vendor/jquery-1.9.1.min.js"><\/script>')
+      script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
+
+      script(src="{{ url_for('static', filename='js/vendor/jquery.blueimp-gallery.min.js') }}")
+      script(src="{{ url_for('static', filename='js/vendor/bootstrap-image-gallery.min.js') }}")
+      script(src="{{ url_for('static', filename='js/vendor/jquery.nailthumb.1.1.min.js') }}")
+
+      = js('js')
+
+      script.
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src='//www.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));

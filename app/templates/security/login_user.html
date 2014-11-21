@@ -1,0 +1,41 @@
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+{% extends "layouts/base.jade" %}
+
+{% block body %}
+<div class="login container">
+    <div class="row">
+        <div class="col-md-5">
+            <h1>Login</h1>
+        </div>
+
+        <div class="col-md-7">
+            <div class="register-cta">
+                <span> Don't have an account? </span>
+                <a type="button" class="pull-right btn btn-primary" href="{{ url_for('security.register') }}"> Sign Up For Free!</a>
+            </div>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2> What's up. Happy to have you back! </h2>
+            <form class="form-horizontal" action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+                {{ login_user_form.hidden_tag() }}
+                {{ render_field_with_errors(login_user_form.email) }}
+                {{ render_field_with_errors(login_user_form.password) }}
+
+                {{ render_field_with_errors(login_user_form.remember) }}
+                {{ render_field(login_user_form.next) }}
+                <div class="form-group">
+                    {{ login_user_form.submit(class_="btn btn-cta col-sm-2 col-sm-offset-2") }}
+                    <div class="col-sm-2">
+                        <a href="{{ url_for('security.forgot_password') }}" class="btn btn-concerned"> Forgot Password? </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+<p>Welcome {{ user.email }}!</p>
+<p>
+    You are registered! Thank you; this is the beginning of something special.
+    Let's continue the connection. Click the confirmation link below or copy +
+    paste the following link in your browser: 
+
+    {% if security.confirmable %}
+        <a href="{{ confirmation_link }}">Confirm my account</a>
+    {% endif %}
+</p>
+
+<p> Sincerely,</p>
+<p> The HairShopSearch Team </p>

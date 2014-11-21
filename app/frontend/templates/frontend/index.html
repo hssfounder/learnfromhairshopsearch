@@ -1,0 +1,212 @@
+{% extends "layouts/base.jade" %}
+
+{% from "macros/_form.html" import render_form %}
+
+{% block body %}
+<div class="logo-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="logo-back">
+                    <a href="{{ url_for('frontend.index') }}">
+                        <img class="img-responsive center-block" src="{{ url_for('static', filename='img/logo-lg.png') }}">
+                </div>
+                </a>
+            </div>
+        </div><!-- /.row -->
+    </div>
+</div>
+
+<div class="search-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                {% if index_search_form %}
+                <form class="form-inline" action="/search/" method="get" role="form">
+                    {{ index_search_form.csrf_token }}
+                    <div class="form-group">
+                        <label class="sr-only" for="menu_type">Type</label>
+                        <select class="form-control input-lg" id="menu_type" name="menu_type">
+                            <option value="none">I'm looking for:</option>
+                            <option value="salon">Salons</option>
+                            <option value="barbershop">Barbershops</option>
+                            <option value="product">Products</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="sr-only" for="zip_code">Zip</label>
+                        <input class="form-control input-lg" id="zip_code" name="zip_code"
+                        type="text" placeholder="enter a ZIP code, Ex.75243">
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-default input-lg" id="submit" name="submit" type="submit" value="Search">
+                    </div>
+                </form><!-- /form -->
+                {% endif %}
+                    <div class="instruction-wrapper">
+                        <p>
+                         Customers, use the 2-step search above to
+                         start finding stylists, barbers, and other providers in your local area.
+                        </p>
+                    </div>
+          </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div>
+
+<div class="introduction-wrapper">
+    <div class="container">
+        <div class="row">
+            <h1 class="index deck text-center"> Introducing the black and brown hair care search made easy! </h1>
+            <div class="col-md-6">
+                <div class="customer-intro">
+                    <h2 class="text-center"> Grow your business </h2>
+                    <p>
+                        As a <a href="{{ url_for('frontend.provider_welcome') }}">provider</a>,
+                        HairShopSearch helps you get in front of thousands of new customers specifically looking for the services
+                        and products you provide. Advertise your skills and potentially earn more money. Register to complete your
+                        provider profile listing and upload a gallery of your work. Let customers favorite your listing and share their hair and beauty needs with you!
+                    </p>
+
+                    <p>
+                        Follow our simple guide to complete your provider profile listing.
+                        Include business details, a gallery of images, and more.
+                        It's fast and free.
+                    </p>
+                    <a href="/register" class="btn btn-cta cta"> Get Listed </a>
+                </div><!-- end /.customer-intro -->
+           </div>
+
+            <div class="col-md-6">
+                <div class="provider-intro">
+                    <h2 class="text-center"> Build hair status </h2>
+                    <p>
+                        As a <a href="{{ url_for('frontend.consumer_welcome') }}">customer</a>,
+                        HairShopSearch helps you find hair care and beauty solutions offered by providers. We’ve got you covered.
+                        Search businesses that offer services and products specific to your hair textures and beauty needs. And
+                        let providers connect to you! Register to complete your online customer hair consultation. <a href="">What is a hair consultation?</a>
+                    </p>
+
+                    <p>
+                        Introduce your hair and beauty needs to local providers when you share your free online customer hair consultation.
+                    </p>
+                    <a href="/register" class="btn btn-cta cta"> Get Started </a>
+                </div><!-- /.provider-intro-->
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.introduction -->
+
+<div class="mid-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <img class="img-responsive center" src="http://placehold.it/300x300&text=Your Salon Here">
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <img class="img-responsive center" src="http://placehold.it/300x300&text=Your Barbershop Here">
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <img class="img-responsive center" src="http://placehold.it/300x300&text=Your Product Here">
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <img class="img-responsive center" src="http://placehold.it/300x300&text=Your Brand Here">
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div><!-- /.foot-banner -->
+
+<div class="read-this">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+            </div>
+
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="school-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="school-promo">
+                    <h2> Start a new career </h2>
+                    <p>
+                        Do you want a new career as a barber or stylist?
+                        We can help you find a cosmetology, braiding, or barber school in Dallas-Fort Worth.
+                    </p>
+
+                    <p>
+                        Becoming a stylist or barber is a good career option. Why?
+                        <ul>
+                            <li> If you want to pursue higher education and learn new skills…   </li>
+                            <li> If you want a new, exciting career…   </li>
+                            <li> If you want to become your own boss one day…   </li>
+                            <li> If you want to help people discover and maintain a look they love…   </li>
+                        </ul>
+                    </p>
+                    <p>
+                        Go ahead, think about becoming a stylist or barber. Click the button below to check out schools in the Dallas/Fort-Worth metroplex.
+                    </p>
+                    <a href="" class="btn btn-cta cta"> View School Listings </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 text">
+                <h2></h2>
+                <img class="img-responsive center-block hidden-xs school-edit" src="{{ url_for('static', filename='img/hair_wash.jpg') }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="interaction-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <div class="interaction-set">
+                    <h2> Have questions? Learn how-to HairShopSearch.  </h2>
+                    <div class="col-md-4">
+                        <p><a href="">Frequently asked questions</a></p>
+                        <img class="img-responsive center hidden-xs edit" src="{{ url_for('static', filename='img/Consumer_FormulaforSuccess.jpg') }}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <p><a href="">Providers</a></p>
+                        <img class="img-responsive center hidden-xs edit" src="{{ url_for('static', filename='img/Provider_Formula4Success.jpg') }}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <p><a href="">Customers</a></p>
+                        <img class="img-responsive center hidden-xs edit" src="{{ url_for('static', filename='img/Provider_HairShopSearchSolution.jpg') }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="last-cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <div class="last-cta-call">
+                    <p> Since we're here at the bottom of the page, let's get you registered. </p>
+                    <a href="/register" class="btn btn-cta cta"> Let's Get Started </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

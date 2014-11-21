@@ -1,0 +1,102 @@
+p { margin-top: 1em; }
+
+.index .page-wrap {
+    padding-top: 3.7em;
+}
+
+.page-wrap {
+    min-height: 100%;
+    width: 100%;
+    margin-bottom: -14em;
+    padding-top: 7.2em;
+    padding-bottom: 2em;
+    background-color: @body-bg-color;
+}
+
+.page-wrap:after {
+    content: "";
+    display: block;
+    height: 14em;
+}
+
+.footer {
+    height: 14em;
+    width: 100%;
+    text-align: center;
+    ul li {
+        display: inline-block;
+    }
+}
+
+/* Nav
+ ******/
+.navbar {
+    z-index: 100;
+}
+
+.navbar.navbar-primary {
+    /*box-shadow: inset 0 -1px 0 0 darken(@nav-bg, 4%);*/
+    border-image: url('/static/img/topNavborder.png') 30 30 round;
+    border-left:0;
+    border-right:0;
+    border-top: 2px solid;
+    border-bottom: 0;
+    background-color: @nav-bg;
+    .navbar-toggle { border-color: #fff; span { background-color: #fff; }
+    }
+    .navbar-brand { padding: 5px 0 0 10px;
+    }
+    .nav {
+        li a { color: @white; font-size: 18px; font-weight:normal; }
+        li a:hover {
+            background: #90B87B;
+            color: @white;
+        }
+    }
+}
+
+
+.navbar.secondary {
+    background-color: @secondary-nav-bg;
+    border-bottom: 0;
+    border-top: 1px solid #67a100;
+    top: 50px;
+    z-index: 10;
+    min-height: 40px;
+    display: inline-block;
+    text-align: center;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    box-shadow: 0px 3px 12px 0px rgba(209,209,209,1);
+    select.input-sm {}
+    .input-sm {
+	    display: inline-block;
+        border-radius: 3px;
+    }
+    .input-lg {
+        width: 13.5em;
+    }
+
+    @media (min-width: 992px) {
+        form input {
+            width: 18em;
+        }
+    }
+
+     @media (min-width: 768px) {
+        form input {
+            width: 15em;
+        }
+    }
+}
+
+
+.navbar-header {
+    line-height: 0.428571;
+}
+
+@media screen and (min-width: 768px) {
+    .navbar-collapse .navbar-nav.navbar-right:last-child {
+        margin-right: 0;
+    }
+}

@@ -1,0 +1,11 @@
+recursive-include app *.py
+recursive-include app *.cfg
+recursive-include app/templates *
+recursive-include app/static *
+recursive-include app/user *
+recursive-include app/frontend *
+recursive-include app/dashboard *
+recursive-include app/search *
+
+
+recursive-exclude *.pyc

@@ -1,0 +1,61 @@
+extends layouts/base.jade
+block body
+  .walkthrough.container
+    .row
+      .col-sm-12
+        h1 Now add some services to your menu!
+        p.
+          We break menus down into three categories: barber services,
+          salon services, and products.
+        p.
+          The categories determine how people find your shop.
+        p.
+          If you list "hair cut" as a barber service, people will only be able to
+          find your shop if they search for "barber hair cuts".
+    .row
+      .col-sm-6
+        -each menu in menus
+          table.table
+            thead
+              tr
+                th= menu.menu_type
+            -each item in menu.menu_items
+              tbody
+                tr
+                  td= item.name
+                  td= item.description
+                  td= item.price
+
+
+      .col-sm-6
+        form(class="form-horizontal", action="#{url_for('dashboard.new_menus')}", method="post")
+          != form.csrf_token()
+          .form-group
+            .col-sm-4
+              != form.menu_type.label(class_="control-label")
+            .col-sm-8
+              != form.menu_type(class_="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.name.label(class_="control-label")
+            .col-sm-8
+              != form.name(class_="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.description.label(class_="control-label")
+            .col-sm-8
+              != form.description(class_="form-control")
+
+          .form-group
+            .col-sm-4
+              != form.price.label(class_="control-label")
+            .col-sm-8
+              != form.price(class_="form-control")
+
+          .form-group
+            .col-sm-3
+              != form.submit(class_="btn btn-success")
+            .col-sm-3
+              a.btn.btn-danger(href="#{url_for('dashboard.profile')}") Skip to My Profile

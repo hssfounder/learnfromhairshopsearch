@@ -1,0 +1,22 @@
+extends layouts/base.jade
+block body
+  .walkthrough.container
+    .row
+      .col-sm-6
+        h1 Let's make a provider account for you!
+        p.
+          Exciting! To get things moving, we just need a couple of pieces
+          of information.
+        p.
+          Can you tell us the name of your business? We use it to generate
+          your unique business page url.
+
+      .col-sm-6
+        form(class="form-horiztonal", action="#{url_for('dashboard.new_provider')}", method="post")
+          != form.csrf_token()
+          .form-group
+            != form.business_name.label(class_="control-label")
+            != form.business_name(class_="form-control")
+
+          .form-group
+            != form.submit(class="btn btn-success")

@@ -1,0 +1,59 @@
+extends layouts/base.jade
+block body
+  .walkthrough.container
+    .row
+      .col-sm-6
+
+        .row
+          .col-sm-12
+            h1 Alright! We're cooking with gas, now.
+
+        .row
+          .col-sm-12
+            p.
+              For this next step, we need to make sure that customers can find
+              your business. Please fill in your address so our search engine
+              will understand where you are.
+
+      .col-sm-6
+        form.form-horizontal(action="#{url_for('dashboard.new_address')}", method="post")
+          != form.csrf_token()
+          .form-group
+            .col-sm-2
+              != form.street_1.label(class_="control-label")
+            .col-sm-10
+              != form.street_1(class_="form-control")
+
+          .form-group
+            .col-sm-2
+              != form.street_2.label(class_="control-label")
+            .col-sm-10
+              != form.street_2(class_="form-control")
+
+          .form-group
+            .col-sm-2
+              != form.apartment.label(class_="control-label")
+            .col-sm-10
+              != form.apartment(class_="form-control")
+
+          .form-group
+            .col-sm-2
+              != form.city.label(class_="control-label")
+            .col-sm-10
+              != form.city(class_="form-control")
+
+          .form-group
+            .col-sm-2
+              != form.state.label(class_="control-label")
+            .col-sm-10
+              != form.state(class_="form-control")
+
+          .form-group
+            .col-sm-2
+              != form.zip_code.label(class_="control-label")
+            .col-sm-10
+              != form.zip_code(class_="form-control")
+
+          .form-group
+            .col-sm-2
+              != form.submit(class_="btn btn-success")

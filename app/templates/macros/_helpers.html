@@ -1,0 +1,20 @@
+{% macro get_messages(category=None) %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for cat, message in messages %}
+                {% if category %}
+                    {% if cat == category %}
+                    <div class="message {{ cat }}">
+                        <p> {{ message }} </p>
+                    </div>
+                    {% endif %}
+
+                {% else %}
+                    <div class="message {{ cat }}">
+                        <p> {{ message }} </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endmacro %}

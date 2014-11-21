@@ -1,0 +1,66 @@
+{% macro render_form(form, url, class="form-horizontal", input_class="") %}
+<form class="{{ class }}" action="{{ url }}" method="POST" role="form">
+    {{ form.csrf_token() }}
+
+    {% for field in form %}
+
+        {% if class == 'form-inline' %}
+            <div class="form-group">
+                {% if field.name != 'csrf_token' and field.name != 'submit' %}
+                    {{ field.label(class_='sr-only') }}
+                    {{ field(class_='form-control ' + input_class ) }}
+
+                {% elif field.name == 'submit'  %}
+                    {{ field(class_="btn btn-default") }}
+
+                {% endif %}
+            </div>
+
+        {% else %}
+        <div class="form-group">
+            {% if field.name != 'csrf_token'  and  field.name != 'submit' %}
+                {{ field.label(class_='control-label col-md-2') }}
+            {% endif %}
+
+            {% if field.__class__.__name__ == 'SubmitField' %}
+            <div class="col-md-2 col-md-offset-2">
+                {{ field(class_='btn btn-default') }}
+            </div>
+
+            {% else %}
+            <div class="col-md-10">
+                {{ field(class_='form-control') }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    {% endfor %}
+</form>
+{% endmacro %}
+
+{% macro render_field(field, label=True) %}
+<div class="form-group">
+    {% if label %}
+        {{ field.label(class_="control-label col-sm-4") }}
+    {% else %}
+        {{ field.label(class_="sr-only") }}
+    {% endif %}
+
+    <div class="col-sm-8">
+        {{ field(class_="form-control {0}".format(kwargs.get('classes', ''))) }}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_social_media_field(field, icon_url="http://placehold.it/30x30") %}
+<div class="form-group">
+    <div class="col-sm-4">
+        <img src="{{'{}'.format(icon_url) }}">
+        {{ field.label(class_="control-label") }}
+    </div>
+    <div class="col-sm-8">
+        {{ field(class_="form-control") }}
+    </div>
+</div>
+{% endmacro %}
